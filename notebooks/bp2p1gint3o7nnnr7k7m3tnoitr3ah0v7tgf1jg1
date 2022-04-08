@@ -1,0 +1,1191 @@
+Return-Path: <joffreybvn@gmail.com>
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+ by inbound-smtp.eu-west-1.amazonaws.com with SMTP id bp2p1gint3o7nnnr7k7m3tnoitr3ah0v7tgf1jg1
+ for linkedin@datalake.joffreybvn.be;
+ Wed, 06 Apr 2022 11:08:56 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.128.169 as permitted sender) client-ip=209.85.128.169; envelope-from=joffreybvn@gmail.com; helo=mail-yw1-f169.google.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of _spf.google.com designates 209.85.128.169 as permitted sender) client-ip=209.85.128.169; envelope-from=joffreybvn@gmail.com; helo=mail-yw1-f169.google.com;
+ dkim=pass header.i=@gmail.com;
+ dmarc=pass header.from=gmail.com;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFIMndCbUw1aTZTVHdFeUVUSy93T0ZvMGFBMDhNRGVROUt1UDJORVM4OFp4eTFOVWdjdDB3MzlKTng5cmM5aWpJM05ZanRaZ0JpZ0o3WXZabWVrbWI4Z0NsdDJ6NTZ1QzJIL0twemtYNGNzYlVuSEpDc3ZpL3RGWVlXTXJORlduVUpQWDJSTGdJaDNrZ1V0WWxCR2dTR014NEJzMnpVWWFYUTJpeHpoZjl3UFhZdjcyWE9OYStXQ1B5VW1FTzdqYWJTblFGb3Bnandpek9wdC85MUgzZTZHQnFtNUN1b0VZL2JCeFVlYXZmZDRFNHNhRDNPdHp3U0YzOTZnTUdjdGgzbUJwL2FPYlZaeERMTjd3MWNTc0tXem5hWnowWEZhSVdvRTFPUzNvTVhrSWc9PQ==
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=A3RcLupNlSxcR5F38EigrjfRgMnuYJMOVK6wrmIgcmh8ZbAzYu0uoQF3shMSYBCfr9+86nnO4RyCg6zqx3hTq3V3MEX5ciISWVEGnO6aNlUik8Vwh+FBZSUDfVxdkPXOgT2VgWWY8yYY7IEtoTUNwXKwWkmThkoFM2qf9Kh/qx4=; c=relaxed/simple; s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1649243337; v=1; bh=UNyBQg8R4X+utvfY0pOSxT7FNA9bzwLZrBBiiKLEOhQ=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-2eb9412f11dso22155667b3.4
+        for <linkedin@datalake.joffreybvn.be>; Wed, 06 Apr 2022 04:08:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=5DD8cOqePPGULKfjMdt6scNcC8D2w1KMgz4sGG4FP2M=;
+        b=MYmrHoNjARxmjkNowQC5+4qt7YmP4cTGg0k536Rz/tF+wW6TmQ9IJNMaVlot2f3+nf
+         Y2GyIGJCNLeCz3KUsKQG8lH34QiP/8OMzC9HVklTj/NxVQmjUo/2k8uHGYJxXo6ubJVf
+         iH2CwX3+dBBm4OYzlpeTDtMPJLKxujBp8RlL4pBs2eWdproXRClSaRpUCCebvcy9OJS+
+         IaKr3vrxg8e+5xMwvWDZWsk+lZD5wrxdqDR/mQc30HZ6T4TJsV05ngeQQbtbSehs1skA
+         kfLY/R2HMoVD7OdXsjKFa8q7RhN7lTbnoOK9CsB9VhRhmxS+auSQ140duR5M45XOW4x9
+         pZgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=5DD8cOqePPGULKfjMdt6scNcC8D2w1KMgz4sGG4FP2M=;
+        b=zE98/AdrSX/FMasbmJprNP5OHFVhf8nJCyxsJ6A8haYq6VTgRBU9lVn1+6g3PQjx0w
+         DcKUkxbJmzwAYvPi0emx6fN6AAnV5y2qX3cIwNY3LTwOLnngRnZoKfyScTs4duPNt3JB
+         +JCwORLO7R5Zm4YopdyxXUdiNYYKJHseibifb+Xf07uHvTUKbGOfI4s1ZZH7rBhrnuna
+         kbqQ/w5oKqriMtmGTJ8pWFFz60G38bYPxg9TDWHleKReXf+ZfqiLuUNuPtbN/1U5YGLr
+         hA9GNdYiQm5rK1jMLgRGZkCj6mrkViAZRiPpzfTV8XNjaEH41JUEjmAQ0Gv3usp52opN
+         pzmw==
+X-Gm-Message-State: AOAM533nNOmrm8w9FBsVLh2OLBTWqtMGBl3+SpgbSjovW5tWqVNmmu+3
+	Zo42ty0T2uMjGlOQYD02LnvGs/ZlEuG5EPbZ0unJVmAU
+X-Google-Smtp-Source: ABdhPJyBZopbFWx4b7UgwWGIRIkI46OlijugLLKm2SRQDN1B+3EyhSGNK7Oqu1NF9LQaXuPP+Ffkk0vy7iofCw/gQvM=
+X-Received: by 2002:a0d:f602:0:b0:2dc:6eaa:64 with SMTP id g2-20020a0df602000000b002dc6eaa0064mr6143620ywf.451.1649243334830;
+ Wed, 06 Apr 2022 04:08:54 -0700 (PDT)
+MIME-Version: 1.0
+References: <1489126221.797346.1649231544646@ltx1-app46537.prod.linkedin.com>
+In-Reply-To: <1489126221.797346.1649231544646@ltx1-app46537.prod.linkedin.com>
+From: Joffrey Bienvenu <joffreybvn@gmail.com>
+Date: Wed, 6 Apr 2022 13:08:43 +0200
+Message-ID: <CABY-6CfnMS0K1ZnFOr2YspTJmOiYZkH614hGmXXh+ZqfWD3d_w@mail.gmail.com>
+Subject: =?UTF-8?B?RndkOiAyMiBub3V2ZWxsZXMgb2ZmcmVzIGTigJllbXBsb2kgcG91ciDigJxEYXRhIEVuZw==?=
+	=?UTF-8?B?aW5lZXLigJ0=?=
+To: linkedin@datalake.joffreybvn.be
+Content-Type: multipart/alternative; boundary="0000000000001eef8205dbfa6359"
+
+--0000000000001eef8205dbfa6359
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+---------- Forwarded message ---------
+De : Alertes LinkedIn Jobs <jobalerts-noreply@linkedin.com>
+Date: mer. 6 avr. 2022 =C3=A0 09:52
+Subject: 22 nouvelles offres d=E2=80=99emploi pour =E2=80=9CData Engineer=
+=E2=80=9D
+To: Joffrey Bienvenu <joffreybvn@gmail.com>
+
+
+Voir les offres d=E2=80=99emploi pour : Belgique
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+
+[image: LinkedIn]
+<https://www.linkedin.com/comm/feed/?midToken=3DAQF6phavpBwDsw&midSig=3D3xH=
+L8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-header-39-home&trkEmail=3De=
+ml-email_job_alert_digest_01-header-39-home-null-8xsfpx%7El1n9vntg%7E2t-nul=
+l-neptune%2Ffeed&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3=
+BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+[image: Joffrey Bienvenu]
+<https://www.linkedin.com/comm/in/joffreybvn?midToken=3DAQF6phavpBwDsw&midS=
+ig=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-header-48-profile&t=
+rkEmail=3Deml-email_job_alert_digest_01-header-48-profile-null-8xsfpx%7El1n=
+9vntg%7E2t-null-neptune%2Fprofile%7Evanity%2Eview&lipi=3Durn%3Ali%3Apage%3A=
+email_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+Votre alerte Emploi pour : Data Engineer
+<https://www.linkedin.com/comm/jobs/search?geoId=3D100565514&savedSearchId=
+=3D1724923037&origin=3DJOB_ALERT_EMAIL&f_TPR=3Da1649145142-&midToken=3DAQF6=
+phavpBwDsw&midSig=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_=
+alert-5-title_jserp_header_mercado&trkEmail=3Deml-email_job_alert_digest_01=
+-job_alert-5-title_jserp_header_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jo=
+bs%7Ejserp%7Esearch&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_0=
+1%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+
+22 nouvelles offres d=E2=80=99emploi (Belgique) correspondent =C3=A0 vos pr=
+=C3=A9f=C3=A9rences.
+[image: Bricsys=C2=AE]
+<https://www.linkedin.com/comm/jobs/view/2967090138?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3D1uRe7ZwMoKNHSQTHurrmXQ%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-6-member_detail=
+s_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-6-member_detai=
+ls_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+Data Engineer
+<https://www.linkedin.com/comm/jobs/view/2967090138?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3D1uRe7ZwMoKNHSQTHurrmXQ%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-6-member_detail=
+s_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-6-member_detai=
+ls_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+
+Bricsys=C2=AE =C2=B7 Gand, R=C3=A9gion flamande, Belgique (Hybride)
+[image: radar icon]
+
+Recrutement actif
+<https://www.linkedin.com/comm/jobs/view/2967090138?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3D1uRe7ZwMoKNHSQTHurrmXQ%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-6-member_detail=
+s_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-6-member_detai=
+ls_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+[image: Apollo Solutions]
+<https://www.linkedin.com/comm/jobs/view/3007033818?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DOcIxxKtazZXP4AMY7RxRNQ%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-7-member_detail=
+s_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-7-member_detai=
+ls_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+Data Engineer
+<https://www.linkedin.com/comm/jobs/view/3007033818?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DOcIxxKtazZXP4AMY7RxRNQ%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-7-member_detail=
+s_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-7-member_detai=
+ls_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+
+Apollo Solutions =C2=B7 Laakdal, R=C3=A9gion flamande, Belgique (Hybride)
+[image: radar icon]
+
+Recrutement actif
+<https://www.linkedin.com/comm/jobs/view/3007033818?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DOcIxxKtazZXP4AMY7RxRNQ%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-7-member_detail=
+s_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-7-member_detai=
+ls_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+[image: Process Automation Solutions]
+<https://www.linkedin.com/comm/jobs/view/2655868748?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3Dqg4nZDDlzMT2On6%2BB8ERyw%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-8-member_de=
+tails_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-8-member_d=
+etails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3=
+D>
+MES & Data Historian Engineer
+<https://www.linkedin.com/comm/jobs/view/2655868748?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3Dqg4nZDDlzMT2On6%2BB8ERyw%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-8-member_de=
+tails_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-8-member_d=
+etails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3=
+D>
+
+Process Automation Solutions =C2=B7 Anvers, R=C3=A9gion flamande, Belgique =
+(Sur site)
+[image: radar icon]
+
+Recrutement actif
+<https://www.linkedin.com/comm/jobs/view/2655868748?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3Dqg4nZDDlzMT2On6%2BB8ERyw%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-8-member_de=
+tails_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-8-member_d=
+etails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3=
+D>
+[image: Ossia Belgium]
+<https://www.linkedin.com/comm/jobs/view/3006343572?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3D4TQVyM8VkZu%2Fc8UCCMHG5w%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-9-member_de=
+tails_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-9-member_d=
+etails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3=
+D>
+Data Engineer
+<https://www.linkedin.com/comm/jobs/view/3006343572?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3D4TQVyM8VkZu%2Fc8UCCMHG5w%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-9-member_de=
+tails_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-9-member_d=
+etails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3=
+D>
+
+Ossia Belgium =C2=B7 Bruxelles et p=C3=A9riph=C3=A9rie (Hybride)
+[image: radar icon]
+
+Recrutement actif
+<https://www.linkedin.com/comm/jobs/view/3006343572?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3D4TQVyM8VkZu%2Fc8UCCMHG5w%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-9-member_de=
+tails_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-9-member_d=
+etails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3=
+D>
+[image: Ordina Belgium]
+<https://www.linkedin.com/comm/jobs/view/2809066182?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DI7APG7ejODA8qkAJKpz7uw%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-10-member_detai=
+ls_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-10-member_det=
+ails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3=
+Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+Senior (Big) Data Engineer
+<https://www.linkedin.com/comm/jobs/view/2809066182?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DI7APG7ejODA8qkAJKpz7uw%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-10-member_detai=
+ls_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-10-member_det=
+ails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3=
+Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+
+Ordina Belgium =C2=B7 Malines, R=C3=A9gion flamande, Belgique (Sur site)
+[image: radar icon]
+
+Recrutement actif
+<https://www.linkedin.com/comm/jobs/view/2809066182?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DI7APG7ejODA8qkAJKpz7uw%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-10-member_detai=
+ls_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-10-member_det=
+ails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3=
+Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+[image: Exellys]
+<https://www.linkedin.com/comm/jobs/view/3009623851?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DIMzHJ9AvjTddGMgPr53Exg%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-11-member_detai=
+ls_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-11-member_det=
+ails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3=
+Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+Data Warehouse Engineer and BI Expert
+<https://www.linkedin.com/comm/jobs/view/3009623851?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DIMzHJ9AvjTddGMgPr53Exg%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-11-member_detai=
+ls_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-11-member_det=
+ails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3=
+Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+
+Exellys =C2=B7 Malines, R=C3=A9gion flamande, Belgique (Sur site)
+[image: radar icon]
+
+Recrutement actif
+<https://www.linkedin.com/comm/jobs/view/3009623851?alertAction=3Dmarkasvie=
+wed&savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrt=
+fSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI=
+3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWO=
+Cnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2=
+ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&=
+savedSearchId=3D1724923037&refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&tra=
+ckingId=3DIMzHJ9AvjTddGMgPr53Exg%3D%3D&midToken=3DAQF6phavpBwDsw&midSig=3D3=
+xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_alert-11-member_detai=
+ls_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_alert-11-member_det=
+ails_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&lipi=3Durn%3Ali%3=
+Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+Voir toutes les offres d=E2=80=99emploi
+<https://www.linkedin.com/comm/jobs/search?geoId=3D100565514&savedSearchId=
+=3D1724923037&origin=3DJOB_ALERT_EMAIL&f_TPR=3Da1649145142-&midToken=3DAQF6=
+phavpBwDsw&midSig=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_=
+alert-4-title_jserp_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_al=
+ert-4-title_jserp_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Ejserp%7Es=
+earch&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%=
+2F2fAIadWcA%2Fug%3D%3D>
+<https://www.linkedin.com/comm/jobs/search?geoId=3D100565514&savedSearchId=
+=3D1724923037&origin=3DJOB_ALERT_EMAIL&f_TPR=3Da1649145142-&midToken=3DAQF6=
+phavpBwDsw&midSig=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-job_=
+alert-4-title_jserp_mercado&trkEmail=3Deml-email_job_alert_digest_01-job_al=
+ert-4-title_jserp_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Ejserp%7Es=
+earch&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%=
+2F2fAIadWcA%2Fug%3D%3D>
+
+
+------------------------------
+[image: premium]
+[image: Joffrey Bienvenu]
+D=C3=A9couvrez les emplois pour lesquels vous seriez un(e) bon(ne) candidat=
+(e)
+Essayez Premium gratuitement
+<https://www.linkedin.com/comm/premium/products/?family=3Djss&midToken=3DAQ=
+F6phavpBwDsw&midSig=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-jo=
+b_alert-19-premium_upsell_top_applicant_mercado&trkEmail=3Deml-email_job_al=
+ert_digest_01-job_alert-19-premium_upsell_top_applicant_mercado-null-8xsfpx=
+%7El1n9vntg%7E2t-null-neptune%2Fpremium%2Eproducts&lipi=3Durn%3Ali%3Apage%3=
+Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+<https://www.linkedin.com/comm/premium/products/?family=3Djss&midToken=3DAQ=
+F6phavpBwDsw&midSig=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-jo=
+b_alert-19-premium_upsell_top_applicant_mercado&trkEmail=3Deml-email_job_al=
+ert_digest_01-job_alert-19-premium_upsell_top_applicant_mercado-null-8xsfpx=
+%7El1n9vntg%7E2t-null-neptune%2Fpremium%2Eproducts&lipi=3Durn%3Ali%3Apage%3=
+Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+
+
+
+
+
+Cet e-mail est destin=C3=A9 =C3=A0 Joffrey Bienvenu (Data Scientist | Data =
+Engineer -
+Mediascale). D=C3=A9couvrez pourquoi nous pr=C3=A9cisons ceci.
+<https://www.linkedin.com/e/v2?e=3D8xsfpx-l1n9vntg-2t&lipi=3Durn%3Ali%3Apag=
+e%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D&a=3D=
+customerServiceUrl&midToken=3DAQF6phavpBwDsw&midSig=3D3xHL8bdJPoqWc1&ek=3De=
+mail_job_alert_digest_01&articleId=3D4788>
+
+
+Vous recevez des e-mails de Alerte Emploi.
+
+G=C3=A9rer les alertes Emploi
+<https://www.linkedin.com/comm/jobs/alerts?midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-footer-17-manage_aler=
+t&trkEmail=3Deml-email_job_alert_digest_01-footer-17-manage_alert-null-8xsf=
+px%7El1n9vntg%7E2t-null-job%7Ealert%7Emanager&lipi=3Durn%3Ali%3Apage%3Aemai=
+l_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+  =C2=B7   Se d=C3=A9sabonner
+<https://www.linkedin.com/comm/jobs/alerts?midToken=3DAQF6phavpBwDsw&midSig=
+=3D3xHL8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-footer-17-manage_aler=
+t&trkEmail=3Deml-email_job_alert_digest_01-footer-17-manage_alert-null-8xsf=
+px%7El1n9vntg%7E2t-null-job%7Ealert%7Emanager&lipi=3Durn%3Ali%3Apage%3Aemai=
+l_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+  =C2=B7   Aide
+<https://www.linkedin.com/e/v2?e=3D8xsfpx-l1n9vntg-2t&lipi=3Durn%3Ali%3Apag=
+e%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D&a=3D=
+customerServiceUrl&midToken=3DAQF6phavpBwDsw&midSig=3D3xHL8bdJPoqWc1&ek=3De=
+mail_job_alert_digest_01&li=3D43&m=3Dfooter&ts=3Dhelp&articleId=3D67>
+
+
+[image: LinkedIn]
+<https://www.linkedin.com/comm/feed/?midToken=3DAQF6phavpBwDsw&midSig=3D3xH=
+L8bdJPoqWc1&trk=3Deml-email_job_alert_digest_01-footer-41-home&trkEmail=3De=
+ml-email_job_alert_digest_01-footer-41-home-null-8xsfpx%7El1n9vntg%7E2t-nul=
+l-neptune%2Ffeed&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3=
+BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D>
+
+
+
+=C2=A9 2022 LinkedIn Ireland Unlimited Company, Wilton Plaza, Wilton Place,
+Dublin 2. LinkedIn est le nom commercial d=C3=A9pos=C3=A9 de LinkedIn Irela=
+nd
+Unlimited Company. LinkedIn et le logo de LinkedIn sont des marques
+d=C3=A9pos=C3=A9es de LinkedIn.
+
+--0000000000001eef8205dbfa6359
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">---------- Forwarded message ---------<br>De=C2=A0: <strong=
+ class=3D"gmail_sendername" dir=3D"auto">Alertes LinkedIn Jobs</strong> <sp=
+an dir=3D"auto">&lt;<a href=3D"mailto:jobalerts-noreply@linkedin.com">jobal=
+erts-noreply@linkedin.com</a>&gt;</span><br>Date: mer. 6 avr. 2022 =C3=A0=
+=C2=A009:52<br>Subject: 22=C2=A0nouvelles offres d=E2=80=99emploi pour =E2=
+=80=9CData Engineer=E2=80=9D<br>To: Joffrey Bienvenu &lt;<a href=3D"mailto:=
+joffreybvn@gmail.com">joffreybvn@gmail.com</a>&gt;<br></div><br><br><u></u>=
+          <div style=3D"padding:0;margin:0 auto;width:100%!important;font-f=
+amily:Helvetica Neue,Helvetica,Arial,sans-serif"> <div style=3D"overflow:hi=
+dden;color:transparent;width:0;font-size:0;opacity:0;height:0"> Voir les of=
+fres d=E2=80=99emploi pour=C2=A0: Belgique =E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0 </div> <table role=3D"present=
+ation" align=3D"center" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" wi=
+dth=3D"100%" bgcolor=3D"#F3F2EF" style=3D"background-color:#f3f2ef;table-la=
+yout:fixed"> <tbody> <tr> <td align=3D"center" style=3D"padding-top:24px"> =
+<center style=3D"width:100%"> <table role=3D"presentation" border=3D"0" cla=
+ss=3D"m_-2930370491653541950mercado-email-container" cellspacing=3D"0" cell=
+padding=3D"0" width=3D"512" bgcolor=3D"#FFFFFF" style=3D"background-color:#=
+ffffff;margin:0 auto;max-width:512px;width:inherit"> <tbody> <tr> <td bgcol=
+or=3D"#FFFFFF" style=3D"background-color:#ffffff;padding:18px 32px 0 32px">=
+ <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0" width=3D"100%" style=3D"width:100%!important;min-width:100%!important">=
+ <tbody> <tr> <td align=3D"left" valign=3D"middle"><a href=3D"https://www.l=
+inkedin.com/comm/feed/?midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc=
+1&amp;trk=3Deml-email_job_alert_digest_01-header-39-home&amp;trkEmail=3Deml=
+-email_job_alert_digest_01-header-39-home-null-8xsfpx%7El1n9vntg%7E2t-null-=
+neptune%2Ffeed&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01=
+%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;display:inline-=
+block;text-decoration:none" target=3D"_blank"> <img alt=3D"LinkedIn" border=
+=3D"0" src=3D"https://www.linkedin.com/comm/dms/logo?midToken=3DAQF6phavpBw=
+Dsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-nul=
+l-47-null&amp;trkEmail=3Deml-email_job_alert_digest_01-null-47-null-null-8x=
+sfpx%7El1n9vntg%7E2t-null-comms%7Ebadging%7Edynamic&amp;lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D&am=
+p;_sig=3D0xsSdQ9DjoqWc1" height=3D"38" style=3D"max-height:38px;outline:non=
+e;color:#ffffff;max-width:unset!important;text-decoration:none"></a></td> <=
+td valign=3D"middle" width=3D"100%" align=3D"right"><a href=3D"https://www.=
+linkedin.com/comm/in/joffreybvn?midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL=
+8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-header-48-profile&amp;tr=
+kEmail=3Deml-email_job_alert_digest_01-header-48-profile-null-8xsfpx%7El1n9=
+vntg%7E2t-null-neptune%2Fprofile%7Evanity%2Eview&amp;lipi=3Durn%3Ali%3Apage=
+%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" styl=
+e=3D"margin:0;color:#0a66c2;display:inline-block;text-decoration:none" targ=
+et=3D"_blank"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" =
+cellpadding=3D"0" width=3D"100%"> <tbody> <tr> <td align=3D"left" valign=3D=
+"middle" style=3D"padding:0 0 0 10px;padding-top:7px"></td> <td valign=3D"m=
+iddle" width=3D"40" style=3D"padding-top:7px;padding-left:10px"> <img alt=
+=3D"Joffrey Bienvenu" border=3D"0" height=3D"32" width=3D"32" src=3D"https:=
+//media-exp1.licdn.com/dms/image/C4D03AQFno75k0VqmYg/profile-displayphoto-s=
+hrink_100_100/0/1608739423943?e=3D2147483647&amp;v=3Dbeta&amp;t=3D8mx17tHry=
+F8h17eDZyAiV2GILeI2VSni00DJUBvfVSs" style=3D"border-radius:50%;outline:none=
+;color:#ffffff;max-width:unset!important;text-decoration:none"></td> </tr> =
+</tbody> </table></a></td> </tr> </tbody> </table></td> </tr> <tr> <td> <ta=
+ble role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" =
+width=3D"100%"> <tbody> <tr> <td> <table role=3D"presentation" border=3D"0"=
+ cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"> <tbody> <tr> <td> <tab=
+le role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" w=
+idth=3D"100%"> <tbody> <tr> <td style=3D"padding:24px 24px 8px"> <h2 style=
+=3D"margin:0;color:#000000;font-weight:400;font-size:24px;line-height:1.333=
+"><a href=3D"https://www.linkedin.com/comm/jobs/search?geoId=3D100565514&am=
+p;savedSearchId=3D1724923037&amp;origin=3DJOB_ALERT_EMAIL&amp;f_TPR=3Da1649=
+145142-&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=
+=3Deml-email_job_alert_digest_01-job_alert-5-title_jserp_header_mercado&amp=
+;trkEmail=3Deml-email_job_alert_digest_01-job_alert-5-title_jserp_header_me=
+rcado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Ejserp%7Esearch&amp;lipi=3Durn=
+%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug=
+%3D%3D" style=3D"color:#242424;display:inline;text-decoration:none" target=
+=3D"_blank">Votre alerte Emploi pour=C2=A0: <span style=3D"font-weight:700"=
+>Data Engineer</span></a></h2></td> </tr> </tbody> </table></td> </tr> <tr>=
+ <td> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpaddi=
+ng=3D"0" width=3D"100%"> <tbody> <tr> <td style=3D"padding:0 24px 16px"> <p=
+ style=3D"margin:0;color:#000000;font-weight:400;font-size:16px;line-height=
+:1.5">22=C2=A0nouvelles offres d=E2=80=99emploi (Belgique) correspondent =
+=C3=A0 vos pr=C3=A9f=C3=A9rences.</p></td> </tr> </tbody> </table></td> </t=
+r> <tr> <td> <table cellspacing=3D"0" cellpadding=3D"0" style=3D"padding:10=
+px 24px"> <tbody valign=3D"top" style=3D"table-layout:fixed;vertical-align:=
+top;width:100%"> <tr> <td width=3D"56" style=3D"width:56px;padding-right:16=
+px"><a href=3D"https://www.linkedin.com/comm/jobs/view/2967090138?alertActi=
+on=3Dmarkasviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh=
+00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4=
+mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKB=
+GpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUF=
+xVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17=
+m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df1a2fc71-2149-=
+4cfc-b385-361c626f5896&amp;trackingId=3D1uRe7ZwMoKNHSQTHurrmXQ%3D%3D&amp;mi=
+dToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job=
+_alert_digest_01-job_alert-6-member_details_mercado&amp;trkEmail=3Deml-emai=
+l_job_alert_digest_01-job_alert-6-member_details_mercado-null-8xsfpx%7El1n9=
+vntg%7E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_ale=
+rt_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;dis=
+play:inline-block;text-decoration:none" target=3D"_blank"><img src=3D"https=
+://media-exp1.licdn.com/dms/image/C4E0BAQERDggXtodDTw/company-logo_100_100/=
+0/1546951475762?e=3D2147483647&amp;v=3Dbeta&amp;t=3DYJtF2m6MEvvg1jBFLuSpOmj=
+ipLG8dZgI1fhnO9dzdxM" alt=3D"Bricsys=C2=AE" border=3D"0" width=3D"48" style=
+=3D"outline:none;color:#ffffff;text-decoration:none"></a></td> <td align=3D=
+"left" style=3D"padding-left:0;text-align:left"><a href=3D"https://www.link=
+edin.com/comm/jobs/view/2967090138?alertAction=3Dmarkasviewed&amp;savedSear=
+chAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3Coa=
+AlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkB=
+x8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTA=
+ltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbI=
+uE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSear=
+chId=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;trac=
+kingId=3D1uRe7ZwMoKNHSQTHurrmXQ%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;mid=
+Sig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-6-me=
+mber_details_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_alert=
+-6-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;=
+lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAI=
+adWcA%2Fug%3D%3D" style=3D"color:#0a66c2;display:inline-block;text-decorati=
+on:none" target=3D"_blank"> <table role=3D"presentation" border=3D"0" cells=
+pacing=3D"0" cellpadding=3D"0" width=3D"100%" valign=3D"top" style=3D"table=
+-layout:fixed;vertical-align:top;width:100%"> <tbody> <tr> <td style=3D"pad=
+ding-bottom:4px"><a href=3D"https://www.linkedin.com/comm/jobs/view/2967090=
+138?alertAction=3Dmarkasviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8Su=
+gAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFf=
+prxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkN=
+Oz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlo=
+b_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%=
+26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df=
+1a2fc71-2149-4cfc-b385-361c626f5896&amp;trackingId=3D1uRe7ZwMoKNHSQTHurrmXQ=
+%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3D=
+eml-email_job_alert_digest_01-job_alert-6-member_details_mercado&amp;trkEma=
+il=3Deml-email_job_alert_digest_01-job_alert-6-member_details_mercado-null-=
+8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_=
+email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"colo=
+r:#0a66c2;font-weight:700;text-decoration:none;display:inline-block;font-si=
+ze:16px" target=3D"_blank">Data Engineer</a></td> </tr> <tr> <td> <p style=
+=3D"margin:0;color:#000000;font-weight:400;font-size:14px;line-height:1.429=
+">Bricsys=C2=AE =C2=B7 Gand, R=C3=A9gion flamande, Belgique (Hybride)</p></=
+td> </tr> <tr> <td width=3D"100%" style=3D"padding-top:8px;width:100%"> <ta=
+ble role=3D"presentation" align=3D"left" border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0" width=3D"initial"> <tbody> <tr style=3D"color:black"> <td st=
+yle=3D"display:inline-block"> <table role=3D"presentation" border=3D"0" cel=
+lspacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td style=
+=3D"white-space:nowrap;display:inline-block"> <table role=3D"presentation" =
+border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody>=
+ <tr> <td width=3D"24" style=3D"display:inline-block;width:24px"><img src=
+=3D"https://static.licdn.com/sc/p/com.linkedin.email-assets-frontend%3Aemai=
+l-assets-frontend-static-content%2B__latest__/f/%2Femail-assets-frontend%2F=
+images%2Femail%2Ficons%2Ficon_green_radar_screen_24x24.png" border=3D"0" al=
+t=3D"radar icon" width=3D"24" height=3D"24" style=3D"outline:none;color:#ff=
+ffff;text-decoration:none"></td> <td width=3D"4" style=3D"display:inline-bl=
+ock;width:4px">=C2=A0</td> <td style=3D"padding:0 24px 4px 4px;white-space:=
+normal;display:inline-block"> <p style=3D"margin:0;color:#737373;font-weigh=
+t:400;font-size:12px;line-height:1.333">Recrutement actif</p></td> </tr> </=
+tbody> </table></td> </tr> </tbody> </table></td> </tr> </tbody> </table></=
+td> </tr> </tbody> </table></a></td> </tr> </tbody> </table> <table cellspa=
+cing=3D"0" cellpadding=3D"0" style=3D"padding:10px 24px"> <tbody valign=3D"=
+top" style=3D"table-layout:fixed;vertical-align:top;width:100%"> <tr> <td w=
+idth=3D"56" style=3D"width:56px;padding-right:16px"><a href=3D"https://www.=
+linkedin.com/comm/jobs/view/3007033818?alertAction=3Dmarkasviewed&amp;saved=
+SearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR=
+3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTA=
+DMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMM=
+DwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aU=
+vcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;saved=
+SearchId=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;=
+trackingId=3DOcIxxKtazZXP4AMY7RxRNQ%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp=
+;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-=
+7-member_details_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_a=
+lert-7-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&=
+amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F=
+2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;display:inline-block;text-deco=
+ration:none" target=3D"_blank"><img src=3D"https://media-exp1.licdn.com/dms=
+/image/C4E0BAQEwvHRFbVDibw/company-logo_100_100/0/1626271573853?e=3D2147483=
+647&amp;v=3Dbeta&amp;t=3Drbjj0hueATlm1mO3barCIBi53dHShTwiyoqE85KfP9A" alt=
+=3D"Apollo Solutions" border=3D"0" width=3D"48" style=3D"outline:none;color=
+:#ffffff;text-decoration:none"></a></td> <td align=3D"left" style=3D"paddin=
+g-left:0;text-align:left"><a href=3D"https://www.linkedin.com/comm/jobs/vie=
+w/3007033818?alertAction=3Dmarkasviewed&amp;savedSearchAuthToken=3D1%26AQEO=
+3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0n=
+j07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4=
+SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJ=
+sNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_=
+57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724923037&amp;=
+refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;trackingId=3DOcIxxKtazZXP4=
+AMY7RxRNQ%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&a=
+mp;trk=3Deml-email_job_alert_digest_01-job_alert-7-member_details_mercado&a=
+mp;trkEmail=3Deml-email_job_alert_digest_01-job_alert-7-member_details_merc=
+ado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage=
+%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" styl=
+e=3D"color:#0a66c2;display:inline-block;text-decoration:none" target=3D"_bl=
+ank"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpaddi=
+ng=3D"0" width=3D"100%" valign=3D"top" style=3D"table-layout:fixed;vertical=
+-align:top;width:100%"> <tbody> <tr> <td style=3D"padding-bottom:4px"><a hr=
+ef=3D"https://www.linkedin.com/comm/jobs/view/3007033818?alertAction=3Dmark=
+asviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmV=
+yNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V=
+_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sF=
+bqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZq=
+aYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWqu=
+BGTXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385=
+-361c626f5896&amp;trackingId=3DOcIxxKtazZXP4AMY7RxRNQ%3D%3D&amp;midToken=3D=
+AQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_di=
+gest_01-job_alert-7-member_details_mercado&amp;trkEmail=3Deml-email_job_ale=
+rt_digest_01-job_alert-7-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t=
+-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest=
+_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;font-weight:=
+700;text-decoration:none;display:inline-block;font-size:16px" target=3D"_bl=
+ank">Data Engineer</a></td> </tr> <tr> <td> <p style=3D"margin:0;color:#000=
+000;font-weight:400;font-size:14px;line-height:1.429">Apollo Solutions =C2=
+=B7 Laakdal, R=C3=A9gion flamande, Belgique (Hybride)</p></td> </tr> <tr> <=
+td width=3D"100%" style=3D"padding-top:8px;width:100%"> <table role=3D"pres=
+entation" align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" w=
+idth=3D"initial"> <tbody> <tr style=3D"color:black"> <td style=3D"display:i=
+nline-block"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" c=
+ellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td style=3D"white-space:n=
+owrap;display:inline-block"> <table role=3D"presentation" border=3D"0" cell=
+spacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td width=
+=3D"24" style=3D"display:inline-block;width:24px"><img src=3D"https://stati=
+c.licdn.com/sc/p/com.linkedin.email-assets-frontend%3Aemail-assets-frontend=
+-static-content%2B__latest__/f/%2Femail-assets-frontend%2Fimages%2Femail%2F=
+icons%2Ficon_green_radar_screen_24x24.png" border=3D"0" alt=3D"radar icon" =
+width=3D"24" height=3D"24" style=3D"outline:none;color:#ffffff;text-decorat=
+ion:none"></td> <td width=3D"4" style=3D"display:inline-block;width:4px">=
+=C2=A0</td> <td style=3D"padding:0 24px 4px 4px;white-space:normal;display:=
+inline-block"> <p style=3D"margin:0;color:#737373;font-weight:400;font-size=
+:12px;line-height:1.333">Recrutement actif</p></td> </tr> </tbody> </table>=
+</td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr> </tbo=
+dy> </table></a></td> </tr> </tbody> </table> <table cellspacing=3D"0" cell=
+padding=3D"0" style=3D"padding:10px 24px"> <tbody valign=3D"top" style=3D"t=
+able-layout:fixed;vertical-align:top;width:100%"> <tr> <td width=3D"56" sty=
+le=3D"width:56px;padding-right:16px"><a href=3D"https://www.linkedin.com/co=
+mm/jobs/view/2655868748?alertAction=3Dmarkasviewed&amp;savedSearchAuthToken=
+=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkD=
+uqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwD=
+OadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-Dvs=
+HXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrI=
+qzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724=
+923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;trackingId=3Dqg=
+4nZDDlzMT2On6%2BB8ERyw%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xH=
+L8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-8-member_deta=
+ils_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_alert-8-member=
+_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3Dur=
+n%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fu=
+g%3D%3D" style=3D"color:#0a66c2;display:inline-block;text-decoration:none" =
+target=3D"_blank"><img src=3D"https://media-exp1.licdn.com/dms/image/C4E0BA=
+QFkUY_sN2lWRQ/company-logo_100_100/0/1603890673509?e=3D2147483647&amp;v=3Db=
+eta&amp;t=3Dp91Gf30RmZzvrHZql9LvWUQTgRieaGJHSpEdhkrt7KE" alt=3D"Process Aut=
+omation Solutions" border=3D"0" width=3D"48" style=3D"outline:none;color:#f=
+fffff;text-decoration:none"></a></td> <td align=3D"left" style=3D"padding-l=
+eft:0;text-align:left"><a href=3D"https://www.linkedin.com/comm/jobs/view/2=
+655868748?alertAction=3Dmarkasviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7=
+FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07=
+oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpG=
+wvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNw=
+jeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57Z=
+wXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724923037&amp;ref=
+Id=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;trackingId=3Dqg4nZDDlzMT2On6%=
+2BB8ERyw%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&am=
+p;trk=3Deml-email_job_alert_digest_01-job_alert-8-member_details_mercado&am=
+p;trkEmail=3Deml-email_job_alert_digest_01-job_alert-8-member_details_merca=
+do-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%=
+3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=
+=3D"color:#0a66c2;display:inline-block;text-decoration:none" target=3D"_bla=
+nk"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpaddin=
+g=3D"0" width=3D"100%" valign=3D"top" style=3D"table-layout:fixed;vertical-=
+align:top;width:100%"> <tbody> <tr> <td style=3D"padding-bottom:4px"><a hre=
+f=3D"https://www.linkedin.com/comm/jobs/view/2655868748?alertAction=3Dmarka=
+sviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVy=
+NdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_=
+tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFb=
+qD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqa=
+YCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquB=
+GTXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-=
+361c626f5896&amp;trackingId=3Dqg4nZDDlzMT2On6%2BB8ERyw%3D%3D&amp;midToken=
+=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert=
+_digest_01-job_alert-8-member_details_mercado&amp;trkEmail=3Deml-email_job_=
+alert_digest_01-job_alert-8-member_details_mercado-null-8xsfpx%7El1n9vntg%7=
+E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_dig=
+est_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;font-weig=
+ht:700;text-decoration:none;display:inline-block;font-size:16px" target=3D"=
+_blank">MES &amp; Data Historian Engineer</a></td> </tr> <tr> <td> <p style=
+=3D"margin:0;color:#000000;font-weight:400;font-size:14px;line-height:1.429=
+">Process Automation Solutions =C2=B7 Anvers, R=C3=A9gion flamande, Belgiqu=
+e (Sur site)</p></td> </tr> <tr> <td width=3D"100%" style=3D"padding-top:8p=
+x;width:100%"> <table role=3D"presentation" align=3D"left" border=3D"0" cel=
+lspacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr style=3D"co=
+lor:black"> <td style=3D"display:inline-block"> <table role=3D"presentation=
+" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbod=
+y> <tr> <td style=3D"white-space:nowrap;display:inline-block"> <table role=
+=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D=
+"initial"> <tbody> <tr> <td width=3D"24" style=3D"display:inline-block;widt=
+h:24px"><img src=3D"https://static.licdn.com/sc/p/com.linkedin.email-assets=
+-frontend%3Aemail-assets-frontend-static-content%2B__latest__/f/%2Femail-as=
+sets-frontend%2Fimages%2Femail%2Ficons%2Ficon_green_radar_screen_24x24.png"=
+ border=3D"0" alt=3D"radar icon" width=3D"24" height=3D"24" style=3D"outlin=
+e:none;color:#ffffff;text-decoration:none"></td> <td width=3D"4" style=3D"d=
+isplay:inline-block;width:4px">=C2=A0</td> <td style=3D"padding:0 24px 4px =
+4px;white-space:normal;display:inline-block"> <p style=3D"margin:0;color:#7=
+37373;font-weight:400;font-size:12px;line-height:1.333">Recrutement actif</=
+p></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr> </t=
+body> </table></td> </tr> </tbody> </table></a></td> </tr> </tbody> </table=
+> <table cellspacing=3D"0" cellpadding=3D"0" style=3D"padding:10px 24px"> <=
+tbody valign=3D"top" style=3D"table-layout:fixed;vertical-align:top;width:1=
+00%"> <tr> <td width=3D"56" style=3D"width:56px;padding-right:16px"><a href=
+=3D"https://www.linkedin.com/comm/jobs/view/3006343572?alertAction=3Dmarkas=
+viewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyN=
+dNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_t=
+OfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbq=
+D8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaY=
+CDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBG=
+TXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-3=
+61c626f5896&amp;trackingId=3D4TQVyM8VkZu%2Fc8UCCMHG5w%3D%3D&amp;midToken=3D=
+AQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_di=
+gest_01-job_alert-9-member_details_mercado&amp;trkEmail=3Deml-email_job_ale=
+rt_digest_01-job_alert-9-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t=
+-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest=
+_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;display:inli=
+ne-block;text-decoration:none" target=3D"_blank"><img src=3D"https://media-=
+exp1.licdn.com/dms/image/C4D0BAQEyfvfvu_BoiQ/company-logo_100_100/0/1612774=
+112039?e=3D2147483647&amp;v=3Dbeta&amp;t=3D3mbkz6LHGO8y_pseBMASqOW-ruNBHsI3=
+MzHHZzQiPMA" alt=3D"Ossia Belgium" border=3D"0" width=3D"48" style=3D"outli=
+ne:none;color:#ffffff;text-decoration:none"></a></td> <td align=3D"left" st=
+yle=3D"padding-left:0;text-align:left"><a href=3D"https://www.linkedin.com/=
+comm/jobs/view/3006343572?alertAction=3Dmarkasviewed&amp;savedSearchAuthTok=
+en=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkW=
+kDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDI=
+wDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-D=
+vsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-L=
+rIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D17=
+24923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;trackingId=3D=
+4TQVyM8VkZu%2Fc8UCCMHG5w%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3=
+xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-9-member_de=
+tails_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_alert-9-memb=
+er_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3D=
+urn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2=
+Fug%3D%3D" style=3D"color:#0a66c2;display:inline-block;text-decoration:none=
+" target=3D"_blank"> <table role=3D"presentation" border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" width=3D"100%" valign=3D"top" style=3D"table-layou=
+t:fixed;vertical-align:top;width:100%"> <tbody> <tr> <td style=3D"padding-b=
+ottom:4px"><a href=3D"https://www.linkedin.com/comm/jobs/view/3006343572?al=
+ertAction=3Dmarkasviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_=
+93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4=
+a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2Cnw=
+OEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wS=
+Hh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfW=
+jYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df1a2fc7=
+1-2149-4cfc-b385-361c626f5896&amp;trackingId=3D4TQVyM8VkZu%2Fc8UCCMHG5w%3D%=
+3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-=
+email_job_alert_digest_01-job_alert-9-member_details_mercado&amp;trkEmail=
+=3Deml-email_job_alert_digest_01-job_alert-9-member_details_mercado-null-8x=
+sfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_em=
+ail_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:=
+#0a66c2;font-weight:700;text-decoration:none;display:inline-block;font-size=
+:16px" target=3D"_blank">Data Engineer</a></td> </tr> <tr> <td> <p style=3D=
+"margin:0;color:#000000;font-weight:400;font-size:14px;line-height:1.429">O=
+ssia Belgium =C2=B7 Bruxelles et p=C3=A9riph=C3=A9rie (Hybride)</p></td> </=
+tr> <tr> <td width=3D"100%" style=3D"padding-top:8px;width:100%"> <table ro=
+le=3D"presentation" align=3D"left" border=3D"0" cellspacing=3D"0" cellpaddi=
+ng=3D"0" width=3D"initial"> <tbody> <tr style=3D"color:black"> <td style=3D=
+"display:inline-block"> <table role=3D"presentation" border=3D"0" cellspaci=
+ng=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td style=3D"whi=
+te-space:nowrap;display:inline-block"> <table role=3D"presentation" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> =
+<td width=3D"24" style=3D"display:inline-block;width:24px"><img src=3D"http=
+s://static.licdn.com/sc/p/com.linkedin.email-assets-frontend%3Aemail-assets=
+-frontend-static-content%2B__latest__/f/%2Femail-assets-frontend%2Fimages%2=
+Femail%2Ficons%2Ficon_green_radar_screen_24x24.png" border=3D"0" alt=3D"rad=
+ar icon" width=3D"24" height=3D"24" style=3D"outline:none;color:#ffffff;tex=
+t-decoration:none"></td> <td width=3D"4" style=3D"display:inline-block;widt=
+h:4px">=C2=A0</td> <td style=3D"padding:0 24px 4px 4px;white-space:normal;d=
+isplay:inline-block"> <p style=3D"margin:0;color:#737373;font-weight:400;fo=
+nt-size:12px;line-height:1.333">Recrutement actif</p></td> </tr> </tbody> <=
+/table></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr=
+> </tbody> </table></a></td> </tr> </tbody> </table> <table cellspacing=3D"=
+0" cellpadding=3D"0" style=3D"padding:10px 24px"> <tbody valign=3D"top" sty=
+le=3D"table-layout:fixed;vertical-align:top;width:100%"> <tr> <td width=3D"=
+56" style=3D"width:56px;padding-right:16px"><a href=3D"https://www.linkedin=
+.com/comm/jobs/view/2809066182?alertAction=3Dmarkasviewed&amp;savedSearchAu=
+thToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSl=
+xxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kx=
+RKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwP=
+LbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5N=
+nh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=
+=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;tracking=
+Id=3DI7APG7ejODA8qkAJKpz7uw%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=
+=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-10-memb=
+er_details_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_alert-1=
+0-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;l=
+ipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIa=
+dWcA%2Fug%3D%3D" style=3D"color:#0a66c2;display:inline-block;text-decoratio=
+n:none" target=3D"_blank"><img src=3D"https://media-exp1.licdn.com/dms/imag=
+e/C4D0BAQGSmGvvX5siGg/company-logo_100_100/0/1584446118812?e=3D2147483647&a=
+mp;v=3Dbeta&amp;t=3DWQYtCL1X_E3w2Y__JYHcjWy4EWDPPWzqIx3al0xvgOY" alt=3D"Ord=
+ina Belgium" border=3D"0" width=3D"48" style=3D"outline:none;color:#ffffff;=
+text-decoration:none"></a></td> <td align=3D"left" style=3D"padding-left:0;=
+text-align:left"><a href=3D"https://www.linkedin.com/comm/jobs/view/2809066=
+182?alertAction=3Dmarkasviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8Su=
+gAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFf=
+prxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkN=
+Oz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlo=
+b_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%=
+26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df=
+1a2fc71-2149-4cfc-b385-361c626f5896&amp;trackingId=3DI7APG7ejODA8qkAJKpz7uw=
+%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3D=
+eml-email_job_alert_digest_01-job_alert-10-member_details_mercado&amp;trkEm=
+ail=3Deml-email_job_alert_digest_01-job_alert-10-member_details_mercado-nul=
+l-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemai=
+l_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"co=
+lor:#0a66c2;display:inline-block;text-decoration:none" target=3D"_blank"> <=
+table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0=
+" width=3D"100%" valign=3D"top" style=3D"table-layout:fixed;vertical-align:=
+top;width:100%"> <tbody> <tr> <td style=3D"padding-bottom:4px"><a href=3D"h=
+ttps://www.linkedin.com/comm/jobs/view/2809066182?alertAction=3Dmarkasviewe=
+d&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXm=
+rtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaIm=
+fI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dyc=
+WOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJ=
+a2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGj=
+l&amp;savedSearchId=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c62=
+6f5896&amp;trackingId=3DI7APG7ejODA8qkAJKpz7uw%3D%3D&amp;midToken=3DAQF6pha=
+vpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01=
+-job_alert-10-member_details_mercado&amp;trkEmail=3Deml-email_job_alert_dig=
+est_01-job_alert-10-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null=
+-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3=
+BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;font-weight:700;t=
+ext-decoration:none;display:inline-block;font-size:16px" target=3D"_blank">=
+Senior (Big) Data Engineer</a></td> </tr> <tr> <td> <p style=3D"margin:0;co=
+lor:#000000;font-weight:400;font-size:14px;line-height:1.429">Ordina Belgiu=
+m =C2=B7 Malines, R=C3=A9gion flamande, Belgique (Sur site)</p></td> </tr> =
+<tr> <td width=3D"100%" style=3D"padding-top:8px;width:100%"> <table role=
+=3D"presentation" align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"initial"> <tbody> <tr style=3D"color:black"> <td style=3D"d=
+isplay:inline-block"> <table role=3D"presentation" border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td style=3D"white=
+-space:nowrap;display:inline-block"> <table role=3D"presentation" border=3D=
+"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td=
+ width=3D"24" style=3D"display:inline-block;width:24px"><img src=3D"https:/=
+/static.licdn.com/sc/p/com.linkedin.email-assets-frontend%3Aemail-assets-fr=
+ontend-static-content%2B__latest__/f/%2Femail-assets-frontend%2Fimages%2Fem=
+ail%2Ficons%2Ficon_green_radar_screen_24x24.png" border=3D"0" alt=3D"radar =
+icon" width=3D"24" height=3D"24" style=3D"outline:none;color:#ffffff;text-d=
+ecoration:none"></td> <td width=3D"4" style=3D"display:inline-block;width:4=
+px">=C2=A0</td> <td style=3D"padding:0 24px 4px 4px;white-space:normal;disp=
+lay:inline-block"> <p style=3D"margin:0;color:#737373;font-weight:400;font-=
+size:12px;line-height:1.333">Recrutement actif</p></td> </tr> </tbody> </ta=
+ble></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr> <=
+/tbody> </table></a></td> </tr> </tbody> </table> <table cellspacing=3D"0" =
+cellpadding=3D"0" style=3D"padding:10px 24px"> <tbody valign=3D"top" style=
+=3D"table-layout:fixed;vertical-align:top;width:100%"> <tr> <td width=3D"56=
+" style=3D"width:56px;padding-right:16px"><a href=3D"https://www.linkedin.c=
+om/comm/jobs/view/3009623851?alertAction=3Dmarkasviewed&amp;savedSearchAuth=
+Token=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxx=
+fkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRK=
+VDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLb=
+L-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh=
+1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=
+=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&amp;tracking=
+Id=3DIMzHJ9AvjTddGMgPr53Exg%3D%3D&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=
+=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-11-memb=
+er_details_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_alert-1=
+1-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Eview&amp;l=
+ipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIa=
+dWcA%2Fug%3D%3D" style=3D"color:#0a66c2;display:inline-block;text-decoratio=
+n:none" target=3D"_blank"><img src=3D"https://media-exp1.licdn.com/dms/imag=
+e/C560BAQFOHpCqnPUyDQ/company-logo_100_100/0/1580228016319?e=3D2147483647&a=
+mp;v=3Dbeta&amp;t=3D8rvyBTPHKyUfnSMqoTUMXpZ7V_Bq_YNCzZeWrkBHEkw" alt=3D"Exe=
+llys" border=3D"0" width=3D"48" style=3D"outline:none;color:#ffffff;text-de=
+coration:none"></a></td> <td align=3D"left" style=3D"padding-left:0;text-al=
+ign:left"><a href=3D"https://www.linkedin.com/comm/jobs/view/3009623851?ale=
+rtAction=3Dmarkasviewed&amp;savedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_9=
+3EAiKh00xBmfEmVyNdNzXmrtfSb8Vf7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a=
+1lWMc4mb2Wo0l_V_tOfaImfI3rja1gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwO=
+EXTKKBGpZpmS4sFbqD8dycWOCnuj8SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSH=
+h4noUFxVpwOyKZqaYCDsTJa2ifKzTJ_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWj=
+YsTE17m47tfwWquBGTXXGjl&amp;savedSearchId=3D1724923037&amp;refId=3Df1a2fc71=
+-2149-4cfc-b385-361c626f5896&amp;trackingId=3DIMzHJ9AvjTddGMgPr53Exg%3D%3D&=
+amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-ema=
+il_job_alert_digest_01-job_alert-11-member_details_mercado&amp;trkEmail=3De=
+ml-email_job_alert_digest_01-job_alert-11-member_details_mercado-null-8xsfp=
+x%7El1n9vntg%7E2t-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email=
+_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a=
+66c2;display:inline-block;text-decoration:none" target=3D"_blank"> <table r=
+ole=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%" valign=3D"top" style=3D"table-layout:fixed;vertical-align:top;wid=
+th:100%"> <tbody> <tr> <td style=3D"padding-bottom:4px"><a href=3D"https://=
+www.linkedin.com/comm/jobs/view/3009623851?alertAction=3Dmarkasviewed&amp;s=
+avedSearchAuthToken=3D1%26AQEO3y7FdS8SugAAAX_93EAiKh00xBmfEmVyNdNzXmrtfSb8V=
+f7PR3CoaAlSlxxfkWkDuqzNXQp1l0nj07oEFjFfprxSK4a1lWMc4mb2Wo0l_V_tOfaImfI3rja1=
+gPTADMkBx8kxRKVDIwDOadHVQj2GG4SpGwvkXkNOz2CnwOEXTKKBGpZpmS4sFbqD8dycWOCnuj8=
+SxMMDwTAltwPLbL-DvsHXkEGC5OJYJsNwjeiFlob_B9wSHh4noUFxVpwOyKZqaYCDsTJa2ifKzT=
+J_aUvcbIuE5Nnh1-LrIqzgvUvG3w6_57ZwXYWj%26AXfWjYsTE17m47tfwWquBGTXXGjl&amp;s=
+avedSearchId=3D1724923037&amp;refId=3Df1a2fc71-2149-4cfc-b385-361c626f5896&=
+amp;trackingId=3DIMzHJ9AvjTddGMgPr53Exg%3D%3D&amp;midToken=3DAQF6phavpBwDsw=
+&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_al=
+ert-11-member_details_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-=
+job_alert-11-member_details_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7=
+Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z=
+6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;font-weight:700;text-dec=
+oration:none;display:inline-block;font-size:16px" target=3D"_blank">Data Wa=
+rehouse Engineer and BI Expert</a></td> </tr> <tr> <td> <p style=3D"margin:=
+0;color:#000000;font-weight:400;font-size:14px;line-height:1.429">Exellys =
+=C2=B7 Malines, R=C3=A9gion flamande, Belgique (Sur site)</p></td> </tr> <t=
+r> <td width=3D"100%" style=3D"padding-top:8px;width:100%"> <table role=3D"=
+presentation" align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"=
+0" width=3D"initial"> <tbody> <tr style=3D"color:black"> <td style=3D"displ=
+ay:inline-block"> <table role=3D"presentation" border=3D"0" cellspacing=3D"=
+0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td style=3D"white-spa=
+ce:nowrap;display:inline-block"> <table role=3D"presentation" border=3D"0" =
+cellspacing=3D"0" cellpadding=3D"0" width=3D"initial"> <tbody> <tr> <td wid=
+th=3D"24" style=3D"display:inline-block;width:24px"><img src=3D"https://sta=
+tic.licdn.com/sc/p/com.linkedin.email-assets-frontend%3Aemail-assets-fronte=
+nd-static-content%2B__latest__/f/%2Femail-assets-frontend%2Fimages%2Femail%=
+2Ficons%2Ficon_green_radar_screen_24x24.png" border=3D"0" alt=3D"radar icon=
+" width=3D"24" height=3D"24" style=3D"outline:none;color:#ffffff;text-decor=
+ation:none"></td> <td width=3D"4" style=3D"display:inline-block;width:4px">=
+=C2=A0</td> <td style=3D"padding:0 24px 4px 4px;white-space:normal;display:=
+inline-block"> <p style=3D"margin:0;color:#737373;font-weight:400;font-size=
+:12px;line-height:1.333">Recrutement actif</p></td> </tr> </tbody> </table>=
+</td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr> </tbo=
+dy> </table></a></td> </tr> </tbody> </table></td> </tr> <tr> <td> <table r=
+ole=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%"> <tbody> <tr> <td style=3D"padding:14px 24px 36px"> <table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D"l=
+eft" style=3D"display:inline-block"> <tbody> <tr> <td align=3D"center" vali=
+gn=3D"middle" style=3D"font-size:16px"><a href=3D"https://www.linkedin.com/=
+comm/jobs/search?geoId=3D100565514&amp;savedSearchId=3D1724923037&amp;origi=
+n=3DJOB_ALERT_EMAIL&amp;f_TPR=3Da1649145142-&amp;midToken=3DAQF6phavpBwDsw&=
+amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_ale=
+rt-4-title_jserp_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_a=
+lert-4-title_jserp_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Ejserp%7E=
+search&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6=
+z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"word-wrap:normal;color:#0a66c2;word-b=
+reak:normal;white-space:normal;display:block;text-decoration:none;text-alig=
+n:center" target=3D"_blank"> <table role=3D"presentation" border=3D"0" cell=
+spacing=3D"0" cellpadding=3D"0" width=3D"100%"> <tbody> <tr> <td bgcolor=3D=
+"#0A66C2" style=3D"padding:12px 24px;color:#ffffff;font-weight:400;display:=
+inline-block;text-decoration:none;font-size:16px;line-height:1.25em;border-=
+color:#0a66c2;background-color:#0a66c2;border-radius:34px;border-width:1px;=
+border-style:solid"><a href=3D"https://www.linkedin.com/comm/jobs/search?ge=
+oId=3D100565514&amp;savedSearchId=3D1724923037&amp;origin=3DJOB_ALERT_EMAIL=
+&amp;f_TPR=3Da1649145142-&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8b=
+dJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-4-title_jserp_me=
+rcado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_alert-4-title_jserp_=
+mercado-null-8xsfpx%7El1n9vntg%7E2t-null-jobs%7Ejserp%7Esearch&amp;lipi=3Du=
+rn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2F=
+ug%3D%3D" style=3D"word-wrap:normal;color:#ffffff;word-break:normal;white-s=
+pace:normal;display:block;text-decoration:none;text-align:center" target=3D=
+"_blank">Voir toutes les offres d=E2=80=99emploi</a></td> </tr> </tbody> </=
+table></a></td> </tr> <tr> <td height=3D"3"> <table width=3D"1" border=3D"0=
+" cellspacing=3D"0" cellpadding=3D"1"> <tbody> <tr> <td> <div style=3D"heig=
+ht:1px;font-size:1px;line-height:1px"> =C2=A0 </div></td> </tr> </tbody> </=
+table></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr>=
+ <tr> <td> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cell=
+padding=3D"0" width=3D"100%" style=3D"padding:0 24px 24px"> <tbody> <tr> <t=
+d> <hr style=3D"background-color:#d9d9d9;margin:0;color:#d9d9d9;border-colo=
+r:#d9d9d9;border-width:0;border-style:solid;height:1px"></td> </tr> <tr> <t=
+d style=3D"padding-top:32px"><img src=3D"https://static.licdn.com/sc/p/com.=
+linkedin.email-assets-frontend%3Aemail-assets-frontend-static-content%2B__l=
+atest__/f/%2Femail-assets-frontend%2Fimages%2Femail%2Ficons%2Ficon_premium_=
+8x8_v1.png" border=3D"0" width=3D"10" height=3D"10" style=3D"outline:none;c=
+olor:#ffffff;text-decoration:none;padding-right:8px"><img src=3D"https://st=
+atic.licdn.com/sc/p/com.linkedin.email-assets-frontend%3Aemail-assets-front=
+end-static-content%2B__latest__/f/%2Femail-assets-frontend%2Fimages%2Femail=
+%2Flogos%2Flogo_premium_no_icon_120x18_v1.png" border=3D"0" alt=3D"premium"=
+ width=3D"60" height=3D"10" style=3D"outline:none;color:#ffffff;text-decora=
+tion:none"></td> </tr> <tr> <td align=3D"center" style=3D"padding-bottom:16=
+px;text-align:center"> <img alt=3D"Joffrey Bienvenu" border=3D"0" height=3D=
+"128" width=3D"128" src=3D"https://media-exp1.licdn.com/dms/image/C4D03AQFn=
+o75k0VqmYg/profile-displayphoto-shrink_100_100/0/1608739423943?e=3D21474836=
+47&amp;v=3Dbeta&amp;t=3D8mx17tHryF8h17eDZyAiV2GILeI2VSni00DJUBvfVSs" style=
+=3D"border-radius:50%;outline:none;color:#ffffff;max-width:unset!important;=
+text-decoration:none"></td> </tr> <tr> <td align=3D"center" style=3D"text-a=
+lign:center"> <h2 style=3D"margin:0;color:#000000;font-weight:400;font-size=
+:20px;line-height:1.2">D=C3=A9couvrez les emplois pour lesquels vous seriez=
+ un(e) bon(ne) candidat(e)</h2></td> </tr> <tr> <td align=3D"center" style=
+=3D"padding:16px 0;text-align:center"> <table border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" role=3D"presentation" align=3D"center" style=3D"display=
+:inline-block"> <tbody> <tr> <td align=3D"center" valign=3D"middle" style=
+=3D"font-size:16px"><a href=3D"https://www.linkedin.com/comm/premium/produc=
+ts/?family=3Djss&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&=
+amp;trk=3Deml-email_job_alert_digest_01-job_alert-19-premium_upsell_top_app=
+licant_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-job_alert-19-pr=
+emium_upsell_top_applicant_mercado-null-8xsfpx%7El1n9vntg%7E2t-null-neptune=
+%2Fpremium%2Eproducts&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_di=
+gest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"word-wrap:normal;color=
+:#0a66c2;word-break:normal;white-space:normal;display:block;text-decoration=
+:none;text-align:center" target=3D"_blank"> <table role=3D"presentation" bo=
+rder=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"> <tbody> <tr>=
+ <td bgcolor=3D"#FFFFFF" style=3D"padding:12px 24px;color:#666666;font-weig=
+ht:400;display:inline-block;text-decoration:none;font-size:16px;line-height=
+:1.25em;border-color:#0a66c2;background-color:#ffffff;border-radius:34px;bo=
+rder-width:1px;border-style:solid"><a href=3D"https://www.linkedin.com/comm=
+/premium/products/?family=3Djss&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D=
+3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-job_alert-19-premium=
+_upsell_top_applicant_mercado&amp;trkEmail=3Deml-email_job_alert_digest_01-=
+job_alert-19-premium_upsell_top_applicant_mercado-null-8xsfpx%7El1n9vntg%7E=
+2t-null-neptune%2Fpremium%2Eproducts&amp;lipi=3Durn%3Ali%3Apage%3Aemail_ema=
+il_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"word-wr=
+ap:normal;color:#0a66c2;word-break:normal;white-space:normal;display:block;=
+text-decoration:none;text-align:center" target=3D"_blank">Essayez Premium g=
+ratuitement</a></td> </tr> </tbody> </table></a></td> </tr> <tr> <td height=
+=3D"3"> <table width=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D"1"=
+> <tbody> <tr> <td> <div style=3D"height:1px;font-size:1px;line-height:1px"=
+> =C2=A0 </div></td> </tr> </tbody> </table></td> </tr> </tbody> </table></=
+td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr> </tbody=
+> </table></td> </tr> <tr> <td> <table role=3D"presentation" border=3D"0" c=
+ellspacing=3D"0" cellpadding=3D"0" width=3D"100%" bgcolor=3D"#F3F2EF" align=
+=3D"left" style=3D"background-color:#f3f2ef;padding-top:16px;color:#000000;=
+text-align:left"> <tbody> <tr> <td> <table width=3D"24" border=3D"0" cellsp=
+acing=3D"0" cellpadding=3D"1"> <tbody> <tr> <td> <div style=3D"height:0px;f=
+ont-size:0px;line-height:0px"> =C2=A0 </div></td> </tr> </tbody> </table></=
+td> <td> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0" width=3D"100%"> <tbody> <tr> <td> <table role=3D"presentation" =
+border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"> <tbody> <t=
+r> <td> <table width=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D"1"=
+> <tbody> <tr> <td> <div style=3D"height:12px;font-size:12px;line-height:12=
+px"> =C2=A0 </div></td> </tr> </tbody> </table></td> </tr> <tr> <td align=
+=3D"left" style=3D"padding:0;color:#000000;text-align:left"> <p style=3D"ma=
+rgin:0;word-wrap:break-word;color:#000000;word-break:break-word;font-weight=
+:400;font-size:12px;line-height:1.333">Cet e-mail est destin=C3=A9 =C3=A0 J=
+offrey Bienvenu (Data Scientist | Data Engineer - Mediascale). <a href=3D"h=
+ttps://www.linkedin.com/e/v2?e=3D8xsfpx-l1n9vntg-2t&amp;lipi=3Durn%3Ali%3Ap=
+age%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D&am=
+p;a=3DcustomerServiceUrl&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bd=
+JPoqWc1&amp;ek=3Demail_job_alert_digest_01&amp;articleId=3D4788" style=3D"c=
+olor:#0a66c2;text-decoration:underline;display:inline-block" target=3D"_bla=
+nk">D=C3=A9couvrez pourquoi nous pr=C3=A9cisons ceci.</a></p></td> </tr> <t=
+r> <td> <table width=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D"1"=
+> <tbody> <tr> <td> <div style=3D"height:16px;font-size:16px;line-height:16=
+px"> =C2=A0 </div></td> </tr> </tbody> </table></td> </tr> <tr> <td align=
+=3D"left" style=3D"padding:0;color:#000000;text-align:left"> <p style=3D"ma=
+rgin:0;color:#000000;font-weight:400;font-size:12px;line-height:1.333">Vous=
+ recevez des e-mails de Alerte Emploi.</p></td> </tr> <tr> <td> <table widt=
+h=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D"1"> <tbody> <tr> <td>=
+ <div style=3D"height:16px;font-size:16px;line-height:16px"> =C2=A0 </div><=
+/td> </tr> </tbody> </table></td> </tr> <tr> <td align=3D"left" style=3D"te=
+xt-align:left"> <table role=3D"presentation" align=3D"center" border=3D"0" =
+cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"> <tbody> <tr> <td valign=
+=3D"middle" align=3D"left" style=3D"vertical-align:middle;text-align:left">=
+<a href=3D"https://www.linkedin.com/comm/jobs/alerts?midToken=3DAQF6phavpBw=
+Dsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-foo=
+ter-17-manage_alert&amp;trkEmail=3Deml-email_job_alert_digest_01-footer-17-=
+manage_alert-null-8xsfpx%7El1n9vntg%7E2t-null-job%7Ealert%7Emanager&amp;lip=
+i=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadW=
+cA%2Fug%3D%3D" style=3D"color:#0a66c2;text-decoration:underline;display:inl=
+ine-block" target=3D"_blank"> <span style=3D"color:#0a66c2;font-weight:400;=
+font-size:12px;line-height:1.333">G=C3=A9rer les alertes Emploi</span></a>=
+=C2=A0=C2=A0=C2=B7=C2=A0=C2=A0<a href=3D"https://www.linkedin.com/comm/jobs=
+/alerts?midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;trk=3Deml=
+-email_job_alert_digest_01-footer-17-manage_alert&amp;trkEmail=3Deml-email_=
+job_alert_digest_01-footer-17-manage_alert-null-8xsfpx%7El1n9vntg%7E2t-null=
+-job%7Ealert%7Emanager&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_d=
+igest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;text-de=
+coration:underline;display:inline-block" target=3D"_blank"> <span style=3D"=
+color:#0a66c2;font-weight:400;font-size:12px;line-height:1.333">Se d=C3=A9s=
+abonner</span></a>=C2=A0=C2=A0=C2=B7=C2=A0=C2=A0<a href=3D"https://www.link=
+edin.com/e/v2?e=3D8xsfpx-l1n9vntg-2t&amp;lipi=3Durn%3Ali%3Apage%3Aemail_ema=
+il_job_alert_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D&amp;a=3DcustomerS=
+erviceUrl&amp;midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xHL8bdJPoqWc1&amp;ek=
+=3Demail_job_alert_digest_01&amp;li=3D43&amp;m=3Dfooter&amp;ts=3Dhelp&amp;a=
+rticleId=3D67" style=3D"color:#0a66c2;text-decoration:underline;display:inl=
+ine-block" target=3D"_blank"> <span style=3D"color:#0a66c2;font-weight:400;=
+font-size:12px;line-height:1.333">Aide</span></a></td> </tr> <tr> <td> <tab=
+le width=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D"1"> <tbody> <t=
+r> <td> <div style=3D"height:16px;font-size:16px;line-height:16px"> =C2=A0 =
+</div></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> </tr>=
+ <tr> <td align=3D"left" style=3D"padding:0;text-align:left"><a href=3D"htt=
+ps://www.linkedin.com/comm/feed/?midToken=3DAQF6phavpBwDsw&amp;midSig=3D3xH=
+L8bdJPoqWc1&amp;trk=3Deml-email_job_alert_digest_01-footer-41-home&amp;trkE=
+mail=3Deml-email_job_alert_digest_01-footer-41-home-null-8xsfpx%7El1n9vntg%=
+7E2t-null-neptune%2Ffeed&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert=
+_digest_01%3BdrlE6z6wT%2F2fAIadWcA%2Fug%3D%3D" style=3D"color:#0a66c2;text-=
+decoration:underline;display:inline-block" target=3D"_blank"><img alt=3D"Li=
+nkedIn" border=3D"0" height=3D"14" src=3D"https://static.licdn.com/sc/p/com=
+.linkedin.email-assets-frontend%3Aemail-assets-frontend-static-content%2B__=
+latest__/f/%2Femail-assets-frontend%2Fimages%2Flogos%2Flogo_linkedin_mercad=
+o_blue_112x28.png" width=3D"56" style=3D"outline:none;color:#ffffff;max-wid=
+th:unset!important;display:block;text-decoration:none"></a></td> </tr> <tr>=
+ <td> <table width=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D"1"> =
+<tbody> <tr> <td> <div style=3D"height:16px;font-size:16px;line-height:16px=
+"> =C2=A0 </div></td> </tr> </tbody> </table></td> </tr> <tr> <td align=3D"=
+left" style=3D"padding:0;color:#000000;text-align:left"> <p style=3D"margin=
+:0;color:#000000;font-weight:400;font-size:12px;line-height:1.333">=C2=A9 2=
+022 LinkedIn Ireland Unlimited Company, Wilton Plaza, Wilton Place, Dublin =
+2. LinkedIn est le nom commercial d=C3=A9pos=C3=A9 de LinkedIn Ireland Unli=
+mited Company. LinkedIn et le logo de LinkedIn sont des marques d=C3=A9pos=
+=C3=A9es de LinkedIn.</p></td> </tr> <tr> <td> <table width=3D"1" border=3D=
+"0" cellspacing=3D"0" cellpadding=3D"1"> <tbody> <tr> <td> <div style=3D"he=
+ight:24px;font-size:24px;line-height:24px"> =C2=A0 </div></td> </tr> </tbod=
+y> </table></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> =
+<td> <table width=3D"24" border=3D"0" cellspacing=3D"0" cellpadding=3D"1"> =
+<tbody> <tr> <td> <div style=3D"height:0px;font-size:0px;line-height:0px"> =
+=C2=A0 </div></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td=
+> </tr> </tbody> </table> </center></td> </tr> </tbody> </table> <img alt=
+=3D"" role=3D"presentation" src=3D"https://www.linkedin.com/emimp/ip_T0hoel=
+puQjRMV3d4YmpsMmJuUm5MVEowOlpXMWhhV3hmYW05aVgyRnNaWEowWDJScFoyVnpkRjh3TVE9P=
+To=3D.gif" style=3D"outline:none;color:#ffffff;text-decoration:none;width:1=
+px;height:1px"> </div> </div></div>
+
+--0000000000001eef8205dbfa6359--
