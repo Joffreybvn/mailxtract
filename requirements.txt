@@ -1,3 +1,0 @@
-lxml
-boto3
-pandas
