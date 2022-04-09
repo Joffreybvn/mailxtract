@@ -1,10 +1,26 @@
 from typing import Optional, Any, List, Dict, Union, Callable
-import lxml.html
-from lxml.html import HtmlElement
+from ..exceptions import LxmlMissing
+
+# Optionally import lxml
+try:
+    import lxml.html
+    from lxml.html import HtmlElement
+except ImportError:
+    lxml = None
+    HtmlElement = None
 
 
-class HTMLExtractor:
+class LXMLExtractor:
     """Base HTML Email extractor class."""
+
+    def __new__(cls, *args, **kwargs) -> 'LXMLExtractor':
+        # Raise an error is lxml is not installed
+        if lxml is None or HtmlElement is None:
+            raise LxmlMissing(
+                "lxml library is missing. Please install lxml, or use another"
+                " extractor."
+            )
+        return super().__new__(cls)
 
     def __init__(self, document: Union[str, HtmlElement]):
         self.document: HtmlElement = self.__load_document(document)

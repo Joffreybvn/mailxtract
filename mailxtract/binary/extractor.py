@@ -1,13 +1,22 @@
 import quopri
 import unicodedata
 from email.message import Message
-from typing import Dict, Any
+from typing import Dict, Any, Union
+from . import MessageReader
 
 
 class BinaryExtractor:
 
-    def __init__(self, message: Message):
-        self.message: Message = message
+    def __init__(self, message: Union[Message, MessageReader]):
+        self.message: Message = self._read_message(message)
+
+    @staticmethod
+    def _read_message(message: Union[Message, MessageReader]) -> Message:
+        """Unpack the Message object and return it."""
+        if isinstance(message, MessageReader):
+            return message.message
+        else:
+            return message
 
     def _extract(self, content_type: str) -> str:
         """Get the part of the message corresponding to the given content type."""
